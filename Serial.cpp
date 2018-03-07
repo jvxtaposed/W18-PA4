@@ -23,12 +23,32 @@ only if a value "i" has appeared more than once.
 #include "Serial.hpp"
 #include <iostream>    
 #include <stdlib.h> 
+#include <map>
 
 int serial(std::vector<int> nums) {
+	std::map<int,int> store;
 	for(int i = 0; i < nums.size(); i++){
-		std::cout<< nums[i] << std::endl;
+		if(store.insert(std::pair<int,int>(nums[i],i)).second == false){
+			return nums[i];
+		}
+		else{
+			store.insert(std::pair<int,int>(nums[i],i))
+		}
 	}
 
+	/*
+
+	for(auto it = store.begin(); it != store.end(); it++){
+		std::cout <<"key: " << it->first <<" elem: " << it->second << std::endl;
+	}
+
+	for( int i = 0; i< nums.size(); i++){
+		if()
+	}
+	*/
+
+
+/*
 	for(int i = 0; i < nums.size(); i++) { 
 
 		int index = nums[i]%nums.size(); 
@@ -44,6 +64,7 @@ int serial(std::vector<int> nums) {
 			return nums[i];
 		}
 	}
+	*/
   return 0;
 }
 #endif
