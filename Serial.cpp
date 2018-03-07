@@ -6,14 +6,15 @@
 // Due: March 10th, 2018 at 11:59 PM
 
 /*
-traverse the list for i= 0 to n-1 elements
-{
-  check for sign of A[abs(A[i])] ;
-  if positive then
-     make it negative by   A[abs(A[i])]=-A[abs(A[i])];
-  else  // i.e., A[abs(A[i])] is negative
-     this   element (ith element of list) is a repetition
-}
+1- Traverse the given array from i= 0 to n-1 elements
+     Go to index arr[i]%n and increment its value by n.
+3- Now traverse the array again and print all those 
+   indexes i for which arr[i]/n is greater than 1.
+
+This approach works because all elements are in range
+from 0 to n-1 and arr[i]/n would be greater than 1
+only if a value "i" has appeared more than once.
+
 */
 
 #ifndef __SERIAL_CPP__
@@ -29,12 +30,15 @@ int serial(std::vector<int> nums) {
 	}
 
 	for(int i = 0; i < nums.size(); i++) { 
-		std::cout<<"[ " << nums[nums[i]] <<" ] " << std::endl;
-		if(nums[nums[i]] < 0){
-			return nums[nums[i]]*-1;
+		std::cout<<"[ " << nums[nums[i]%nums.size] <<" ] " << std::endl;
+		nums[nums[i]%nums.size] =+ nums.size(); 
 		}
-		else{
-			nums[nums[i]] = nums[nums[i]]*-1;
+	}
+	for(int i = 0; i < nums.size(); i++) { 
+		std::cout<<"[ " << (nums[i]/nums.size()) <<" ] " << std::endl;
+		if((nums[i]/nums.size()) > 1){
+			std::cout<<"[ " << nums[i] <<" ] " << std::endl;
+			return nums[i];
 		}
 	}
   return 0;
