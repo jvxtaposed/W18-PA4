@@ -22,41 +22,30 @@
 int serial(std::vector<int> nums) {
   int size = nums.size();
   int middle = (size/2);
-  int temp = 0;
-  if(size != 1)
+  int low = 0;
+  int high = size;
+  while(low < high)
   {
-  	if(nums.at(middle-1)==nums.at(middle))
+	middle = (low + high)/2;
+	if(nums.at(middle+1)==nums.at(middle))
   	{
 		//std::cout<<nums.at(middle-1)<<","<<nums.at(middle)<<std::endl;
-    		return temp+ nums.at(middle);
+    		return nums.at(middle);
   	}
   	else
   	{
-		std::vector<int> lowerHalf(nums.begin(), nums.begin()+middle);
-		std::vector<int> upperHalf(nums.begin()+middle, nums.end());
-  		/*
-		for(auto it = lowerHalf.begin(); it!=lowerHalf.end(); it++)
+		//go right
+		if(middle == nums.at(middle)-nums[0])
 		{
-			std::cout <<"Lower"<< *it << std::endl;
+			low = middle;
 		}
-  		for(auto it = upperHalf.begin(); it!=upperHalf.end(); it++)
-		{
-			std::cout <<"Upper"<< *it << std::endl;
-		}
-		*/
-		
-		int retval = serial(lowerHalf);
-		if(retval != 0)
-		{
-			return retval;
-		}
+		//go left
 		else
 		{
-			retval = serial(upperHalf);
-			return retval;
+			high = middle;
 		}
   	}
   }
-  return temp;
+  return 0;
 }
 #endif
