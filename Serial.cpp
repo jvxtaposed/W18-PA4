@@ -24,12 +24,17 @@ traverse the list for i= 0 to n-1 elements
 #include <stdlib.h> 
 
 int serial(std::vector<int> nums) {
-	for(auto it = nums.begin(); it != nums.end(); it++) { 
-		if(nums[*it->first] >= 0){
-			arr[*it->first] = arr[*it->first] * -1;
+	for(int i = 0; i < nums.size(); i++){
+		std::cout<< nums[i] << std::endl;
+	}
+
+	for(int i = 0; i < nums.size(); i++) { 
+		std::cout<<"[ " << nums[nums[i]] <<" ] " << std::endl;
+		if(nums[nums[i]] < 0){
+			return nums[nums[i]]*-1;
 		}
 		else{
-			return arr[*it->first];
+			nums[nums[i]] = nums[nums[i]]*-1;
 		}
 	}
   return 0;
