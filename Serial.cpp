@@ -30,14 +30,17 @@ int serial(std::vector<int> nums) {
 	}
 
 	for(int i = 0; i < nums.size(); i++) { 
-		std::cout<<"[ " << nums[nums[i]%nums.size] <<" ] " << std::endl;
-		nums[nums[i]%nums.size] =+ nums.size(); 
-		}
+
+		int index = nums[i]%nums.size(); 
+		nums[index] += nums.size();
+		std::cout<<"index:" << nums[i]%nums.size() <<"\t nums[index]:" <<
+			nums[index] << std::endl;
+		
 	}
 	for(int i = 0; i < nums.size(); i++) { 
-		std::cout<<"[ " << (nums[i]/nums.size()) <<" ] " << std::endl;
+		std::cout<<"nums[i]/n" << (nums[i]/nums.size()) <<"\t " << std::endl;
 		if((nums[i]/nums.size()) > 1){
-			std::cout<<"[ " << nums[i] <<" ] " << std::endl;
+			std::cout<<"in if:nums[i] " << nums[i] <<"" << std::endl;
 			return nums[i];
 		}
 	}
