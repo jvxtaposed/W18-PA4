@@ -1,50 +1,62 @@
 // CSE 101 Winter 2018, PA 4
 //
-// Name: TODO put both partners' info if applicable
-// PID: TODO
-// Sources of Help: TODO
+// Name: Ishan Goyal, Jennifer Fung
+// PID: A12094992, A12099804
+// Sources of Help: None
 // Due: March 10th, 2018 at 11:59 PM
-
-/*
-1- Traverse the given array from i= 0 to n-1 elements
-     Go to index arr[i]%n and increment its value by n.
-3- Now traverse the array again and print all those 
-   indexes i for which arr[i]/n is greater than 1.
-
-This approach works because all elements are in range
-from 0 to n-1 and arr[i]/n would be greater than 1
-only if a value "i" has appeared more than once.
-
-*/
 
 #ifndef __SERIAL_CPP__
 #define __SERIAL_CPP__
 
 #include "Serial.hpp"
-#include <iostream>    
-#include <stdlib.h> 
-#include <map>
-
-int serial(std::vector<int> nums) {
+#include <iostream>
 /*
-	std::map<int,int> store;
-	for(int i = 0; i < nums.size(); i++){
-		if(store.insert(std::pair<int,int>(nums[i],i)).second == false){
-			return nums[i];
-		}
-		else{
-			store.insert(std::pair<int,int>(nums[i],i));
-		}
-	}
+ *Input: Sorted list of consecutively increasing factory serial numbers (int)
+	 in increasing order, with one serial number printed multiple times
+ *
+ *Output: The serial number that is printed multiple times 
+ */
 
-	*/
-///*
-	for(int i = 0; i< nums.size(); i++){
-		if(nums[i+1] == nums[i]){
-			return nums[i];
+//Numbers will be non-negative, guranteed a duplicate
+//Use binary search to find the duplicate
+int serial(std::vector<int> nums) {
+  int size = nums.size();
+  int middle = (size/2);
+  int temp = 0;
+  if(size != 1)
+  {
+  	if(nums.at(middle-1)==nums.at(middle))
+  	{
+		//std::cout<<nums.at(middle-1)<<","<<nums.at(middle)<<std::endl;
+    		return temp+ nums.at(middle);
+  	}
+  	else
+  	{
+		std::vector<int> lowerHalf(nums.begin(), nums.begin()+middle);
+		std::vector<int> upperHalf(nums.begin()+middle, nums.end());
+  		/*
+		for(auto it = lowerHalf.begin(); it!=lowerHalf.end(); it++)
+		{
+			std::cout <<"Lower"<< *it << std::endl;
 		}
-	}
-//*/
-  return 0;
+  		for(auto it = upperHalf.begin(); it!=upperHalf.end(); it++)
+		{
+			std::cout <<"Upper"<< *it << std::endl;
+		}
+		*/
+		
+		int retval = serial(lowerHalf);
+		if(retval != 0)
+		{
+			return retval;
+		}
+		else
+		{
+			retval = serial(upperHalf);
+			return retval;
+		}
+  	}
+  }
+  return temp;
 }
 #endif
