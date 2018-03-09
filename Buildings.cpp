@@ -19,23 +19,6 @@
 
 static int b = 0;
 
-void re(TwoD_Array<int> survey, int i, int j){
-
-	survey.at(i,j) = 0;
-	if(i > 0 &&survey.at(i-1,j) == 1){
-		remove(survey, i-1, j);
-	}
-	if(i < survey.getNumRows()-1 && survey.at(i+1,j) == 1){
-		remove(survey, i+1, j);
-	}
-	if(j>0 && survey.at(i,j-1) == 1){
-		remove(survey, i, j-1);
-	}
-	if(j < survey.getNumCols()-1 && survey.at(i,j+1) == 1){
-		remove(survey, i, j+1);
-	}
-}
-
 static void floodfill(TwoD_Array<int> survey, int r, int c){
 	Interval *node = new Interval(r, c);
 	std::queue<Interval*> q;
@@ -93,6 +76,7 @@ int buildings(TwoD_Array<int> survey) {
 				floodfill(survey, row, col);
 		//		b++;
 				re(survey,row,col);
+				std::cout<<"row: "<< row << " col: " << col << std::endl;
 	
 			}
 		}
