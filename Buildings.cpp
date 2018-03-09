@@ -28,6 +28,7 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 //		survey.printOut();
 		Interval *popped = q.front();
 		q.pop();
+	//	std::cout << "queue size: " << q.size() << std::endl;
 		Interval *w = new Interval(popped->start, popped->end);
 		/*
 		w->start = popped->start;
@@ -42,18 +43,19 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 		//int e = survey.at(popped.start, popped.end);
 
 		//explore go left
-		while(survey.at(w->start, w->end) == 1){
+		while(survey.at(w->start, w->end) == 1 && w->end >= 0){
+		//	std::cout<< " in west col: " << w->end << std::endl;
 			survey.at(w->start, w->end) = 0;
 			//explore north
 			int north = survey.at(w->start+1, w->end);
-			if(north == 1){
+			if(north == 1 && w->start+1 >= 0){
 				Interval *temp = new Interval(w->start+1, w->end);
 				q.push(temp);
 			}
 			//explore south
-			int south = survey.at(w->start+1, w->end);
-			if(south == 1){
-				Interval *temp = new Interval(w->start+1, w->end);
+			int south = survey.at(w->start-1, w->end);
+			if(south == 1 && w->start-1 >= 0){
+				Interval *temp = new Interval(w->start-1, w->end);
 				q.push(temp);
 			}
 			w->end = w->end-1;
@@ -62,19 +64,20 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 		}
 
 		//explore right
-		while(survey.at(e->start, e->end) == 1){
+		while(survey.at(e->start, e->end) == 1 && e->end >= 0){
+		//	std::cout<< "in east col: "<< e->end << std::endl;
 			survey.at(e->start, e->end) = 0;
 
 			//explore north
 			int north = survey.at(e->start+1, e->end);
-			if(north == 1){
-				Interval *temp = new Interval(e->start+1, e->end);
+			if(north == 1 && e->start+1 >= 0){
+				Interval *temp = new Interval(e->start-1, e->end);
 				q.push(temp);
 			}
 			//explore south
-			int south = survey.at(e->start+1, e->end);
-			if(south == 1){
-				Interval *temp = new Interval(e->start+1, e->end);
+			int south = survey.at(e->start-1, e->end);
+			if(south == 1 && e->start-1 >= 0){
+				Interval *temp = new Interval(e->start-1, e->end);
 				q.push(temp);
 			}
 			e->end = e->end+1;
@@ -89,7 +92,7 @@ int buildings(TwoD_Array<int> survey) {
 		for(int col = 0; col < survey.getNumCols(); col++){
 			if(survey.at(row,col) == 1){
 				floodfill(survey, row, col);
-//			std::cout<<"b: " << b << std::endl;
+//			std::cout<<"b: " << b << std::endl;	
 			}
 		}
 	}
