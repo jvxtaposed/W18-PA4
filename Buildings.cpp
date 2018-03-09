@@ -31,36 +31,40 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 		survey.at(popped->start, popped->end) = 0;
 //		survey.printOut();
 		//go down
-		int south = survey.at(popped->start+1, popped->end);
-		if(south == 1 && popped->start+1 < survey.getNumRows()){
+//		int south = survey.at(popped->start+1, popped->end);
+		if(survey.at(popped->start+1, popped->end) == 1 && popped->start < survey.getNumRows()-1){
 			survey.at(popped->start+1, popped->end) = 0;
 			Interval *s = new Interval(popped->start+1, popped->end);
 //			std::cout<<"south pushing: " << s->start <<","<<s->end<< std::endl;
 			q.push(s);
 			}
 		//go up
-		int north = survey.at(popped->start-1, popped->end);
-		if(north == 1 && popped->start-1 >= 0){
+//		int north = survey.at(popped->start-1, popped->end);
+		if(popped->start > 0) {
+		if(survey.at(popped->start-1, popped->end) == 1 && popped->start > 0){
 			survey.at(popped->start-1, popped->end) = 0;
 			Interval *n = new Interval(popped->start-1, popped->end);
 //			std::cout<<"north pushing: " << n->start <<","<<n->end<< std::endl;
 			q.push(n);
 		}
+		}
 		//go right
-		int east = survey.at(popped->start, popped->end+1);
-		if(east ==1 && popped->end+1 < survey.getNumCols()){
+	//	int east = survey.at(popped->start, popped->end+1);
+		if(survey.at(popped->start, popped->end+1) ==1 && popped->end < survey.getNumCols()-1){
 			survey.at(popped->start, popped->end+1) = 0;
 			Interval *e = new Interval(popped->start, popped->end+1);
 //			std::cout<<"east pushing: " << e->start <<","<<e->end<< std::endl;
 			q.push(e);
 		}
 		//go left
-		int west = survey.at(popped->start, popped->end-1);
-		if(west ==1 && popped->end-1 >= 0){
+	//	int west = survey.at(popped->start, popped->end-1);
+		if(popped->end > 0){
+		if(survey.at(popped->start, popped->end-1) ==1 && popped->end > 0){
 			survey.at(popped->start, popped->end-1) = 0;
 			Interval *w = new Interval(popped->start, popped->end-1);
 //			std::cout<<"west pushing: " << w->start <<","<<w->end<< std::endl;
 			q.push(w);
+		}
 		}
 
 	}
@@ -75,8 +79,7 @@ int buildings(TwoD_Array<int> survey) {
 			if(survey.at(row,col) == 1){
 				floodfill(survey, row, col);
 		//		b++;
-				re(survey,row,col);
-				std::cout<<"row: "<< row << " col: " << col << std::endl;
+		//		std::cout<<"row: "<< row << " col: " << col << std::endl;
 	
 			}
 		}
