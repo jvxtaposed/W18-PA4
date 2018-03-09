@@ -10,6 +10,7 @@
 #define __BUILDINGS_CPP__
 
 #include <queue>
+#include <iostream>
 #include "Interval.hpp"
 #include "Buildings.hpp"
 
@@ -24,7 +25,7 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 	std::queue<Interval*> q;
 	q.push(node);
 	while(!q.empty()){
-		survey.printOut();
+//		survey.printOut();
 		Interval *popped = q.front();
 		q.pop();
 		Interval *w = new Interval(popped->start, popped->end);
@@ -88,6 +89,7 @@ int buildings(TwoD_Array<int> survey) {
 		for(int col = 0; col < survey.getNumCols(); col++){
 			if(survey.at(row,col) == 1){
 				floodfill(survey, row, col);
+//			std::cout<<"b: " << b << std::endl;
 			}
 		}
 	}
