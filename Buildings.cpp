@@ -28,58 +28,42 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 
 		Interval *popped = q.front();
 		std::cout<< "popping: " << popped->start<<","<<popped->end << std::endl; 
-	
 		q.pop();
-
-	//	std::cout << "queue size: " << q.size() << std::endl;
-		Interval *w = new Interval(popped->start, popped->end);
-		Interval *e = new Interval(popped->start, popped->end);
-
-		//explore go left
-		while(survey.at(w->start, w->end) == 1 && w->end >= 0){
-			std::cout<< " in west col: " << w->end << std::endl;
-			survey.at(w->start, w->end) = 0;
-			survey.printOut();
-			//explore north
-			int north = survey.at(w->start+1, w->end);
-			if(north == 1 && w->start+1 >= 0){
-				Interval *temp = new Interval(w->start+1, w->end);
-				std::cout<<"WN pushing: " << temp->start <<","<<temp->end<< std::endl;
-				q.push(temp);
+		survey.at(popped->start, popped->end) = 0;
+		survey.printOut();
+		//go down
+		int south = survey.at(popped->start+1, popped->end);
+		if(south == 1 && popped->start+1 < survey.getNumRows()){
+			survey.at(popped->start+1, popped->end) = 0;
+			Interval *s = new Interval(popped->start+1, popped->end);
+			std::cout<<"south pushing: " << s->start <<","<<s->end<< std::endl;
+			q.push(s);
 			}
-			//explore south
-			int south = survey.at(w->start-1, w->end);
-			if(south == 1 && w->start-1 >= 0){
-				Interval *tempNs = new Interval(w->start-1, w->end);
-				std::cout<<"WS pushing: " << tempNs->start <<","<<tempNs->end <<std::endl;		
-				q.push(tempNs);
-			}
-			w->end = w->end-1;
-			//survey.at(w->start, w->end) != nullptr || survey.at(w0>start, w->end) != 0
-
+		//go up
+		int north = survey.at(popped->start-1, popped->end);
+		if(north == 1 && popped->start-1 >= 0){
+			survey.at(popped->start-1, popped->end) = 0;
+			Interval *n = new Interval(popped->start-1, popped->end);
+			std::cout<<"north pushing: " << n->start <<","<<n->end<< std::endl;
+			q.push(n);
+		}
+		//go right
+		int east = survey.at(popped->start, popped->end+1);
+		if(east ==1 && popped->end+1 < survey.getNumCols()){
+			survey.at(popped->start, popped->end+1) = 0;
+			Interval *e = new Interval(popped->start, popped->end+1);
+			std::cout<<"east pushing: " << e->start <<","<<e->end<< std::endl;
+			q.push(e);
+		}
+		//go left
+		int west = survey.at(popped->start, popped->end-1);
+		if(west ==1 && popped->end-1 >= 0){
+			survey.at(popped->start, popped->end-1) = 0;
+			Interval *w = new Interval(popped->start, popped->end-1);
+			std::cout<<"west pushing: " << w->start <<","<<w->end<< std::endl;
+			q.push(w);
 		}
 
-		//explore right
-		while(survey.at(e->start, e->end) == 1 && e->end >= 0){
-			std::cout<< "in east col: "<< e->end << std::endl;
-			survey.at(e->start, e->end) = 0;
-			survey.printOut();
-			//explore north
-			int north = survey.at(e->start+1, e->end);
-			if(north == 1 && e->start+1 >= 0){
-				Interval *tempEn = new Interval(e->start+1, e->end);
-				std::cout<<"EN pushing: " << tempEn->start <<","<<tempEn->end <<std::endl;		
-				q.push(tempEn);
-			}
-			//explore south
-			int south = survey.at(e->start-1, e->end);
-			if(south == 1 && e->start-1 >= 0){
-				Interval *tempEs = new Interval(e->start-1, e->end);
-				std::cout<<"ES pushing: " << tempEs->start <<","<<tempEs->end <<std::endl;		
-				q.push(tempEs);
-			}
-			e->end = e->end+1;
-		}
 	}
 	b++;
 			std::cout<<"b: " << b << std::endl;	
