@@ -27,16 +27,16 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 	while(!q.empty()){
 
 		Interval *popped = q.front();
-		std::cout<< "popping: " << popped->start<<","<<popped->end << std::endl; 
+//		std::cout<< "popping: " << popped->start<<","<<popped->end << std::endl; 
 		q.pop();
 		survey.at(popped->start, popped->end) = 0;
-		survey.printOut();
+//		survey.printOut();
 		//go down
 		int south = survey.at(popped->start+1, popped->end);
 		if(south == 1 && popped->start+1 < survey.getNumRows()){
 			survey.at(popped->start+1, popped->end) = 0;
 			Interval *s = new Interval(popped->start+1, popped->end);
-			std::cout<<"south pushing: " << s->start <<","<<s->end<< std::endl;
+//			std::cout<<"south pushing: " << s->start <<","<<s->end<< std::endl;
 			q.push(s);
 			}
 		//go up
@@ -44,7 +44,7 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 		if(north == 1 && popped->start-1 >= 0){
 			survey.at(popped->start-1, popped->end) = 0;
 			Interval *n = new Interval(popped->start-1, popped->end);
-			std::cout<<"north pushing: " << n->start <<","<<n->end<< std::endl;
+//			std::cout<<"north pushing: " << n->start <<","<<n->end<< std::endl;
 			q.push(n);
 		}
 		//go right
@@ -52,7 +52,7 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 		if(east ==1 && popped->end+1 < survey.getNumCols()){
 			survey.at(popped->start, popped->end+1) = 0;
 			Interval *e = new Interval(popped->start, popped->end+1);
-			std::cout<<"east pushing: " << e->start <<","<<e->end<< std::endl;
+//			std::cout<<"east pushing: " << e->start <<","<<e->end<< std::endl;
 			q.push(e);
 		}
 		//go left
@@ -60,13 +60,13 @@ static void floodfill(TwoD_Array<int> survey, int r, int c){
 		if(west ==1 && popped->end-1 >= 0){
 			survey.at(popped->start, popped->end-1) = 0;
 			Interval *w = new Interval(popped->start, popped->end-1);
-			std::cout<<"west pushing: " << w->start <<","<<w->end<< std::endl;
+//			std::cout<<"west pushing: " << w->start <<","<<w->end<< std::endl;
 			q.push(w);
 		}
 
 	}
 	b++;
-			std::cout<<"b: " << b << std::endl;	
+//			std::cout<<"b: " << b << std::endl;	
 }
 
 int buildings(TwoD_Array<int> survey) {
@@ -80,6 +80,8 @@ int buildings(TwoD_Array<int> survey) {
 			}
 		}
 	}
-  return b;
+  int c = b;
+  b = 0;
+  return c;
 }
 #endif
